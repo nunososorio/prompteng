@@ -47,4 +47,3 @@ if st.button('Iniciar'):
         playlist = f.read()
     
     st.code(playlist)
-```

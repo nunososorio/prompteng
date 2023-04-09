@@ -1,1 +1,1 @@
-huffman
+huffman==0.1.2

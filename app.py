@@ -1,49 +1,16 @@
 
 import streamlit as st
-import scrapy
-import re
+from huffman import HuffmanCoding
 
-class VideoSpider(scrapy.Spider):
-    name = 'video-spider'
-    start_urls = ['https://example.com/videos']
+def encode_text(text):
+    h = HuffmanCoding(text)
+    output = h.compress()
+    return [output[i:i+2000] for i in range(0, len(output), 2000)]
 
-    def parse(self, response):
-        dicionario = {}
-        videos = response.xpath('//div[@class="video"]')
-        for video in videos:
-            title = video.xpath('.//h3/text()').get()
-            script = video.xpath('.//script/text()').get()
-            mp4_link = re.search(r"file: '(.*?)'", script).group(1)
-            poster = re.search(r"poster: '(.*?)'", script).group(1)
-            if title not in dicionario:
-                dicionario[title] = (mp4_link, poster)
-
-        def escrever_playlist(dicionario):
-            with open('videos.m3u8', 'w') as f:
-                for titulo, dados in dicionario.items():
-                    f.write(f'#EXTINF:0,{titulo}\n')
-                    f.write(f'#EXTVLCOPT:network-caching=1000\n')
-                    f.write(f'{dados[0]}\n')
-                    f.write(f'#EXT-X-IMAGE-URI:{dados[1]}\n')
-
-        escrever_playlist(dicionario)
-
-        next_page = response.xpath('//a[@rel="next"]/@href')
-        if next_page:
-            yield scrapy.Request(url=next_page, callback=self.parse)
-
-st.title('Gerador de Playlist de Vídeos')
-
-if st.button('Iniciar'):
-    from scrapy.crawler import CrawlerProcess
-
-    process = CrawlerProcess()
-    process.crawl(VideoSpider)
-    process.start()
-
-    st.success('Playlist gerada com sucesso!')
-
-    with open('videos.m3u8', 'r') as f:
-        playlist = f.read()
-    
-    st.code(playlist)
+st.title("AI Pront Engineering - give more info using less characters")
+input_text = st.text_input("Enter text to encode:")
+if input_text:
+    encoded_text = encode_text(input_text)
+    st.write("Encoded text:")
+    for chunk in encoded_text:
+        st.write(chunk)

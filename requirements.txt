@@ -1,4 +1,2 @@
-transformers
 sumy
-torch
-tensorflow
+nltk

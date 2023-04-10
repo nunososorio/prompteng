@@ -4,7 +4,6 @@ import streamlit as st
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer
-import pyperclip
 
 def summarize_text(text, language):
     parser = PlaintextParser.from_string(text, Tokenizer(language))
@@ -29,7 +28,6 @@ if prompt_type == "Text":
     if st.button("Summarize"):
         summary = summarize_text(text, language)
         st.write(summary)
-        #pyperclip.copy(summary)
         st.write(f"Token size: {len(summary.split())}")          
 
 elif prompt_type == "Code":

@@ -1,2 +1,4 @@
-sumy
-nltk
+nltk==3.6.5
+streamlit==1.1.0
+sumy==0.8.1
+python-abbreviate==0.5.1

@@ -1,4 +1,5 @@
 nltk
 sumy
 abbreviate
-PyEnchant
+pyenchant
+enchant

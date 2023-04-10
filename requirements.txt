@@ -1,4 +1,2 @@
 nltk
 sumy
-abbreviate
-pyperclip

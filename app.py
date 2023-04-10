@@ -36,7 +36,7 @@ if prompt_type == "Text":
 elif prompt_type == "Code":
     st.header("Code")
     code = st.text_area("Enter Python code")
-    if st.button("Remove annotations"):
+    if st.button("Clean the code"):
         cleaned_code = remove_annotations(code)
         st.code(cleaned_code)
         st.write(f"Output token size: {len(cleaned_code.split())}")

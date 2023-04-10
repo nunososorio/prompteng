@@ -48,20 +48,18 @@ elif prompt_type == "Code":
     code = st.text_area("Enter Python code")
     if st.button("Remove annotations"):
         cleaned_code = remove_annotations(code)
-        chunks = [cleaned_code[i:i+2000] for i in range(0, len(cleaned_code), 2000)]
-        for chunk in chunks:
-            st.code(chunk)
-            st.write(f"Output token size: {len(chunk.split())}")
-            if st.button("Copy to clipboard"):
-                st.write(f"Copied {len(chunk)} characters to clipboard")
-                st.markdown(f'<textarea id="copy-textarea">{chunk}</textarea>', unsafe_allow_html=True)
-                st.markdown('<button onclick="copyToClipboard()">Copy to clipboard</button>', unsafe_allow_html=True)
-                st.markdown('''
-                    <script>
-                        function copyToClipboard() {
-                            var copyText = document.querySelector("#copy-textarea");
-                            copyText.select();
-                            document.execCommand("copy");
-                        }
-                    </script>
-                ''', unsafe_allow_html=True)
+        st.code(cleaned_code)
+        st.write(f"Output token size: {len(cleaned_code.split())}")
+        if st.button("Copy to clipboard"):
+            st.write(f"Copied {len(cleaned_code)} characters to clipboard")
+            st.markdown(f'<textarea id="copy-textarea">{cleaned_code}</textarea>', unsafe_allow_html=True)
+            st.markdown('<button onclick="copyToClipboard()">Copy to clipboard</button>', unsafe_allow_html=True)
+            st.markdown('''
+                <script>
+                    function copyToClipboard() {
+                        var copyText = document.querySelector("#copy-textarea");
+                        copyText.select();
+                        document.execCommand("copy");
+                    }
+                </script>
+            ''', unsafe_allow_html=True)

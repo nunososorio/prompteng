@@ -35,3 +35,7 @@ In the Code section, users can enter Python code and generate a cleaned version 
 Both sections also provide a "Copy to clipboard" button that allows users to easily copy the summarized text or cleaned code to their clipboard.
 
 We hope that AI Prompt Engineering will be a useful tool for anyone looking to experiment with different types of prompts for AI language models. Give it a try at http://prompteng.streamlit.app!
+
+
+
+This project is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/ or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.

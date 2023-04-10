@@ -1,56 +1,38 @@
 import streamlit as st
-from transformers import pipeline
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
-from sumy.summarizers.lex_rank import LexRankSummarizer
-import tokenize
+from sumy.summarizers.lsa import LsaSummarizer
 
-def generate_text(prompt):
-    generator = pipeline('text-generation', model='gpt2')
-    text = generator(prompt, max_length=2000)[0]['generated_text']
-    return text
-
-def summarize_text(text):
-    parser = PlaintextParser.from_string(text, Tokenizer('english'))
-    summarizer = LexRankSummarizer()
-    summary = summarizer(parser.document, sentences_count=3)
+def summarize_text(text, language):
+    parser = PlaintextParser.from_string(text, Tokenizer(language))
+    summarizer = LsaSummarizer()
+    summary = summarizer(parser.document, 10)
     return ' '.join([str(sentence) for sentence in summary])
 
-def compress_code(code):
-    # Remove comments
-    tokens = [tok for tok in tokenize.generate_tokens(iter(code.splitlines(True)).__next__)]
-    # Combine tokens into chunks of up to 2000 tokens
-    chunks = [tokens[i:i+2000] for i in range(0, len(tokens), 2000)]
-    # Convert chunks back into code strings
-    compressed_code = [''.join([t[1] for t in chunk]) for chunk in chunks]
-    return compressed_code
+def remove_annotations(code):
+    lines = code.split('\n')
+    lines = [line for line in lines if not line.strip().startswith('#')]
+    return '\n'.join(lines)
 
-def main():
-    st.title('My Streamlit App')
+st.set_page_config(page_title="AI Prompt Engineering", page_icon=":memo:", layout="wide")
 
-    # Add a selectbox to the sidebar:
-    language = st.sidebar.selectbox(
-        'Select a language',
-        ['English', 'Czech', 'German', 'Spanish', 'French', 'Italian', 'Dutch', 'Polish', 'Portuguese', 'Slovak', 'Swedish']
-    )
+st.sidebar.title("AI Prompt Engineering")
+prompt_type = st.sidebar.selectbox("Select prompt type", ["Text", "Code"])
 
-    # Add a textarea to the app:
-    code = st.text_area('Enter some Python code')
-
-    # Add a button to the app:
-    if st.button('Compress Code'):
-        compressed_code = compress_code(code)
-        st.write(compressed_code)
-
-    prompt = st.text_input('Enter a prompt:')
-
-    if st.button('Generate Text'):
-        text = generate_text(prompt)
-        st.write(text)
-
-        if st.button('Summarize Text'):
-            summary = summarize_text(text)
-            st.write(summary)
-
-if __name__ == '__main__':
-    main()
+if prompt_type == "Text":
+    st.header("Text")
+    language = st.selectbox("Select language", ["english", "french", "german", "spanish"])
+    text = st.text_area("Enter text to summarize")
+    if st.button("Summarize"):
+        summary = summarize_text(text, language)
+        chunks = [summary[i:i+2000] for i in range(0, len(summary), 2000)]
+        for chunk in chunks:
+            st.write(chunk)
+elif prompt_type == "Code":
+    st.header("Code")
+    code = st.text_area("Enter Python code")
+    if st.button("Remove annotations"):
+        cleaned_code = remove_annotations(code)
+        chunks = [cleaned_code[i:i+2000] for i in range(0, len(cleaned_code), 2000)]
+        for chunk in chunks:
+            st.code(chunk)

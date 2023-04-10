@@ -26,10 +26,10 @@ if prompt_type == "Text":
     st.header("Text")
     language = st.selectbox("Select language", ["czech", "dutch", "english", "french", "german", "italian", "portuguese", "romanian", "russian", "slovak", "spanish"])
     text = st.text_area("Enter text to summarize")
-    if st.button("Summarize & copy to clipboard"):
+    if st.button("Summarize"):
         summary = summarize_text(text, language)
         st.write(summary)
-        pyperclip.copy(summary)
+        #pyperclip.copy(summary)
         st.write(f"Token size: {len(summary.split())}")          
 
 elif prompt_type == "Code":
@@ -39,6 +39,3 @@ elif prompt_type == "Code":
         cleaned_code = remove_annotations(code)
         st.code(cleaned_code)
         st.write(f"Token size: {len(cleaned_code.split())}")
-
-        if st.button("Copy to Clipboard"):
-            pyperclip.copy(cleaned_code)

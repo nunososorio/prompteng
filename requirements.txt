@@ -1,3 +1,3 @@
-nltk==3.6.5
-sumy==0.8.1
-python-abbreviate==0.5.1
+nltk
+sumy
+python-abbreviate

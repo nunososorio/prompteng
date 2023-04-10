@@ -28,8 +28,7 @@ if prompt_type == "Text":
     text = st.text_area("Enter text to summarize")
     if st.button("Summarize"):
         summary = summarize_text(text, language)
-        st.clipboard.write_text(summary)
-        st.write(f"Summarized and copied to clipboard: {summary}")
+        st.code(summary)
         st.write(f"Token size: {len(summary.split())}")
         
 elif prompt_type == "Code":
@@ -38,7 +37,4 @@ elif prompt_type == "Code":
     if st.button("Clean the code"):
         cleaned_code = remove_annotations(code)
         st.code(cleaned_code)
-        st.write(f"Output token size: {len(cleaned_code.split())}")
-        if st.button("Copy to clipboard"):
-            st.clipboard.write_text(cleaned_code)
-            st.write(f"Copied {len(cleaned_code)} characters to clipboard")
+        st.write(f"Token size: {len(cleaned_code.split())}")

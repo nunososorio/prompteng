@@ -2,3 +2,4 @@ nltk
 sumy
 abbreviate
 bokeh
+streamlit_bokeh_events

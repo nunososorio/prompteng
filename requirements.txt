@@ -1,4 +1,4 @@
 nltk
 sumy
 abbreviate
-enchant
+enchant==3.2.0

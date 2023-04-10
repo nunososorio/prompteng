@@ -1,9 +1,11 @@
 import nltk
 nltk.download('punkt')
+
 import streamlit as st
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer
+from sumy.utils import get_stop_words
 
 def summarize_text(text, language):
     parser = PlaintextParser.from_string(text, Tokenizer(language))
@@ -23,13 +25,27 @@ prompt_type = st.sidebar.selectbox("Select prompt type", ["Text", "Code"])
 
 if prompt_type == "Text":
     st.header("Text")
-    language = st.selectbox("Select language", ["english", "french", "german", "spanish"])
+    language = st.selectbox("Select language", sorted(get_stop_words.LANGUAGES))
     text = st.text_area("Enter text to summarize")
     if st.button("Summarize"):
         summary = summarize_text(text, language)
         chunks = [summary[i:i+2000] for i in range(0, len(summary), 2000)]
         for chunk in chunks:
             st.write(chunk)
+            st.write(f"Output token size: {len(chunk.split())}")
+            if st.button("Copy to clipboard"):
+                st.write(f"Copied {len(chunk)} characters to clipboard")
+                st.markdown(f'<textarea id="copy-textarea">{chunk}</textarea>', unsafe_allow_html=True)
+                st.markdown('<button onclick="copyToClipboard()">Copy to clipboard</button>', unsafe_allow_html=True)
+                st.markdown('''
+                    <script>
+                        function copyToClipboard() {
+                            var copyText = document.querySelector("#copy-textarea");
+                            copyText.select();
+                            document.execCommand("copy");
+                        }
+                    </script>
+                ''', unsafe_allow_html=True)
 elif prompt_type == "Code":
     st.header("Code")
     code = st.text_area("Enter Python code")
@@ -38,3 +54,17 @@ elif prompt_type == "Code":
         chunks = [cleaned_code[i:i+2000] for i in range(0, len(cleaned_code), 2000)]
         for chunk in chunks:
             st.code(chunk)
+            st.write(f"Output token size: {len(chunk.split())}")
+            if st.button("Copy to clipboard"):
+                st.write(f"Copied {len(chunk)} characters to clipboard")
+                st.markdown(f'<textarea id="copy-textarea">{chunk}</textarea>', unsafe_allow_html=True)
+                st.markdown('<button onclick="copyToClipboard()">Copy to clipboard</button>', unsafe_allow_html=True)
+                st.markdown('''
+                    <script>
+                        function copyToClipboard() {
+                            var copyText = document.querySelector("#copy-textarea");
+                            copyText.select();
+                            document.execCommand("copy");
+                        }
+                    </script>
+                ''', unsafe_allow_html=True)

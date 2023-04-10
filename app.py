@@ -6,7 +6,6 @@ from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer
 from sumy.summarizers.lex_rank import LexRankSummarizer
 from sumy.summarizers.luhn import LuhnSummarizer
-from sumy.summarizers.edmundson import EdmundsonSummarizer
 from sumy.summarizers.kl import KLSummarizer
 import black
 
@@ -18,8 +17,6 @@ def summarize_text(text, language, summary_size, summarizer_type):
         summarizer = LexRankSummarizer()
     elif summarizer_type == 'LuhnSummarizer':
         summarizer = LuhnSummarizer()
-    elif summarizer_type == 'EdmundsonSummarizer':
-        summarizer = EdmundsonSummarizer()
     elif summarizer_type == 'KLSummarizer':
         summarizer = KLSummarizer()
     summary = summarizer(parser.document, summary_size)
@@ -40,7 +37,7 @@ if prompt_type == "Text":
     language = st.selectbox("Select language", ["czech", "dutch", "english", "french", "german", "italian", "portuguese", "romanian", "russian", "slovak", "spanish"])
     text = st.text_area("Enter text to summarize")
     summary_size = st.slider('Summary size', 1, 20, 10)
-    summarizer_type = st.selectbox("Select Sumy summarizer type", ["LsaSummarizer", "LexRankSummarizer", "LuhnSummarizer", "EdmundsonSummarizer", "KLSummarizer"])
+    summarizer_type = st.selectbox("Select Sumy summarizer type", ["LsaSummarizer", "LexRankSummarizer", "LuhnSummarizer", "KLSummarizer"])
     if st.button("Summarize"):
         summary = summarize_text(text, language, summary_size, summarizer_type)
         st.write(summary)

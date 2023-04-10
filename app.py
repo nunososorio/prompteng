@@ -31,18 +31,8 @@ if prompt_type == "Text":
         st.write(summary)
         st.write(f"Output token size: {len(summary.split())}")
         if st.button("Copy to clipboard"):
+            st.clipboard.write_text(summary)
             st.write(f"Copied {len(summary)} characters to clipboard")
-            st.markdown(f'<textarea id="copy-textarea">{summary}</textarea>', unsafe_allow_html=True)
-            st.markdown('<button onclick="copyToClipboard()">Copy to clipboard</button>', unsafe_allow_html=True)
-            st.markdown('''
-                <script>
-                    function copyToClipboard() {
-                        var copyText = document.querySelector("#copy-textarea");
-                        copyText.select();
-                        document.execCommand("copy");
-                    }
-                </script>
-            ''', unsafe_allow_html=True)
 elif prompt_type == "Code":
     st.header("Code")
     code = st.text_area("Enter Python code")
@@ -51,15 +41,5 @@ elif prompt_type == "Code":
         st.code(cleaned_code)
         st.write(f"Output token size: {len(cleaned_code.split())}")
         if st.button("Copy to clipboard"):
+            st.clipboard.write_text(cleaned_code)
             st.write(f"Copied {len(cleaned_code)} characters to clipboard")
-            st.markdown(f'<textarea id="copy-textarea">{cleaned_code}</textarea>', unsafe_allow_html=True)
-            st.markdown('<button onclick="copyToClipboard()">Copy to clipboard</button>', unsafe_allow_html=True)
-            st.markdown('''
-                <script>
-                    function copyToClipboard() {
-                        var copyText = document.querySelector("#copy-textarea");
-                        copyText.select();
-                        document.execCommand("copy");
-                    }
-                </script>
-            ''', unsafe_allow_html=True)

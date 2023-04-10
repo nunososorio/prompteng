@@ -1,9 +1,5 @@
 import nltk
-nltk.download('punkt')
-
-import streamlit as import nltk
-nltk.download('punkt')
-
+#nltk.download('punkt')
 import streamlit as st
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer

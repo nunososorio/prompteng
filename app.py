@@ -30,7 +30,7 @@ if prompt_type == "Text":
         summary = summarize_text(text, language)
         if st.button("Copy to clipboard"):
             st.clipboard.write_text(summary)
-            st.write(f"Copied {len(summary)} characters to clipboard")
+           # st.write(f"Copied {len(summary)} characters to clipboard")
         st.write(summary)
         st.write(f"Output token size: {len(summary.split())}")
 elif prompt_type == "Code":

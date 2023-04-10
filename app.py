@@ -1,3 +1,4 @@
+import tokenize
 import streamlit as st
 from transformers import pipeline
 from sumy.parsers.plaintext import PlaintextParser

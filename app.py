@@ -5,7 +5,6 @@ import streamlit as st
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer
-from sumy.utils import get_stop_words
 
 def summarize_text(text, language):
     parser = PlaintextParser.from_string(text, Tokenizer(language))
@@ -25,7 +24,7 @@ prompt_type = st.sidebar.selectbox("Select prompt type", ["Text", "Code"])
 
 if prompt_type == "Text":
     st.header("Text")
-    language = st.selectbox("Select language", sorted(get_stop_words.LANGUAGE_MAP.keys()))
+    language = st.selectbox("Select language", ["czech", "dutch", "english", "french", "german", "italian", "portuguese", "romanian", "russian", "slovak", "spanish"])
     text = st.text_area("Enter text to summarize")
     if st.button("Summarize"):
         summary = summarize_text(text, language)

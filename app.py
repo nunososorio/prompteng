@@ -28,11 +28,11 @@ if prompt_type == "Text":
     text = st.text_area("Enter text to summarize")
     if st.button("Summarize"):
         summary = summarize_text(text, language)
-        st.write(summary)
-        st.write(f"Output token size: {len(summary.split())}")
         if st.button("Copy to clipboard"):
             st.clipboard.write_text(summary)
             st.write(f"Copied {len(summary)} characters to clipboard")
+        st.write(summary)
+        st.write(f"Output token size: {len(summary.split())}")
 elif prompt_type == "Code":
     st.header("Code")
     code = st.text_area("Enter Python code")

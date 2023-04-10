@@ -28,23 +28,21 @@ if prompt_type == "Text":
     text = st.text_area("Enter text to summarize")
     if st.button("Summarize"):
         summary = summarize_text(text, language)
-        chunks = [summary[i:i+2000] for i in range(0, len(summary), 2000)]
-        for chunk in chunks:
-            st.write(chunk)
-            st.write(f"Output token size: {len(chunk.split())}")
-            if st.button("Copy to clipboard"):
-                st.write(f"Copied {len(chunk)} characters to clipboard")
-                st.markdown(f'<textarea id="copy-textarea">{chunk}</textarea>', unsafe_allow_html=True)
-                st.markdown('<button onclick="copyToClipboard()">Copy to clipboard</button>', unsafe_allow_html=True)
-                st.markdown('''
-                    <script>
-                        function copyToClipboard() {
-                            var copyText = document.querySelector("#copy-textarea");
-                            copyText.select();
-                            document.execCommand("copy");
-                        }
-                    </script>
-                ''', unsafe_allow_html=True)
+        st.write(summary)
+        st.write(f"Output token size: {len(summary.split())}")
+        if st.button("Copy to clipboard"):
+            st.write(f"Copied {len(summary)} characters to clipboard")
+            st.markdown(f'<textarea id="copy-textarea">{summary}</textarea>', unsafe_allow_html=True)
+            st.markdown('<button onclick="copyToClipboard()">Copy to clipboard</button>', unsafe_allow_html=True)
+            st.markdown('''
+                <script>
+                    function copyToClipboard() {
+                        var copyText = document.querySelector("#copy-textarea");
+                        copyText.select();
+                        document.execCommand("copy");
+                    }
+                </script>
+            ''', unsafe_allow_html=True)
 elif prompt_type == "Code":
     st.header("Code")
     code = st.text_area("Enter Python code")

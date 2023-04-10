@@ -1,1 +1,2 @@
-huffman==0.1.2
+heapq
+collections

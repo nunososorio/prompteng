@@ -42,8 +42,10 @@ if prompt_type == "Text":
         summary = summarize_text(text, language, summary_size, summarizer_type)
         st.write(summary)
         st.write(f"Token size: {len(summary.split())}")
-        st.write(f"Examples of scaffolding sentences for text: \n1. \"Perform sentiment analysis:...\"\n2. \"The main point of this text is...\"\n3. \"The purpose of this research is to...\"\n4. \"Generate a 1oochr summary...\"\n5. \"This topic is important because...\"\n6. \"...\"\n7. \"A common misconception related to this text is...\"\n8. \"The most significant factor in the text is...\"\n9. \"One possible solution to this problem is...\"\n10. \"The most important thing to remember about this text is...\"\n11. \"Another way to think about this text is...\"\n12. \"Rewrite for clarity...\"\n13. \"The key takeaway from this article is...\"\n14. \"Copy-edit...\"\n15. \"One limitation of this study is that...\"\n16. \"The implications of the text are...\"\n17. \"This research contributes to our understanding of...\"\n18. \"Proofread...\"\n19. \"Revise...\"\n20. \"Format...\"")
-
+        scaffolding_sentences = ["Perform sentiment analysis", "The main point of this text is", "The purpose of this research is to", "Generate a 100chr summary", "This topic is important because", "A common misconception related to this text is:", "The most significant factor in the text is", "One possible solution to this problem is", "The most important thing to remember about this text is", "Another way to think about this text is", "Rewrite for clarity", "The key takeaway from this article is", "Copy-edit", "One limitation of this study is that", "The implications of the text are", "This research contributes to our understanding of", "Proofread", "Revise", "Format", "Proofread, revise, copy-edit and format"]
+        selected_sentence = st.selectbox("Select scaffolding sentence", scaffolding_sentences)
+        text = st.text_area("Formulate your prompt", f'{selected_sentence}: {summary}')
+        
 elif prompt_type == "Code":
     st.header("Code")
     code = st.text_area("Enter Python code")
@@ -52,6 +54,8 @@ elif prompt_type == "Code":
             formatted_code = black.format_str(code, mode=black.Mode())
             st.code(formatted_code)
             st.write(f"Token size: {len(formatted_code.split())}")
-            st.write(f"Examples of scaffolding sentences for code: \n1. \"Let’s take a step back and think about what we want to achieve.\"\n2. \"What are the inputs we need to consider?\"\n3. \"What are the outputs we expect?\"\n4. \"How can I alter the code to add new functionality?\"\n5. \"Let’s write some pseudocode to help us think through the problem.\"\n6. \"Now that we have a plan, give an example of the code.\"\n7. \"Let’s start by writing some tests to make sure our code works.\"\n8. \"What are some potential issues with our code?\"\n9. \"How can we make our code more efficient?\"\n10. \"How can we make our code more readable?\"\n11. \"What are some ways we can improve our code?\"\n12. \"Let’s refactor our code to make it more modular.\"\n13. \"What are some ways we can optimize our code?\"\n14. \"Let’s add some error handling to our code.\"\n15. \"How can we make our code more maintainable?\"\n16. \"What are some best practices for writing clean code?\"\n17. \"Let’s review our code and make sure it meets our requirements.\"")
+            scaffolding_sentences = ["Let’s take a step back and think about what we want to achieve.", "What are the inputs we need to consider?", "What are the outputs we expect?", "How can I alter the code to help debugging?", "Let’s write some pseudocode to help us think through the problem.", "Add print statements to the code to track progress.", "Let’s start by writing some tests to make sure our code works.", "What are some potential issues with our code?", "How can we make our code more efficient?", "How can we make our code more readable?", "What are some ways we can improve our code?", "Let’s refactor our code to make it more modular.", "What are some ways we can optimize our code?", "Let’s add some error handling to our code.", "How can we make our code more maintainable?", "Does the code below follows best practices for writing clean code?", "Let’s review our code and make sure it meets our requirements."]
+            selected_sentence = st.selectbox("Select scaffolding sentence", scaffolding_sentences)
+            text = st.text_area("Formulate your prompt", f'{selected_sentence}: {formatted_code}')
         except Exception as e:
             st.write(f"Error: {e}")

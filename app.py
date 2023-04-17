@@ -87,10 +87,10 @@ elif prompt_type == "Code":
             st.write(f"Error: {e}")
             
     def shorten_names(node):
-    if isinstance(node, ast.Name):
-        node.id = node.id[0]
-    for child in ast.iter_child_nodes(node):
-        shorten_names(child)
+        if isinstance(node, ast.Name):
+            node.id = node.id[0]
+        for child in ast.iter_child_nodes(node):
+            shorten_names(child)
 
     if st.button("Jungle mode-Shogtongue the code!"):
         try:

@@ -68,22 +68,20 @@ elif prompt_type == "Code":
     code = st.text_area("Enter Python code to compress")
     if st.button("Shogtongue the code!"):
         try:
-            # Remove comments and unnecessary whitespace
-            pattern = r"(?m)^\s*[#].*$|^\s+"
-            code = re.sub(pattern, "", code)
+            # Remove comments
+            code = re.sub(r'#.*', '', code)
 
-            # Use black to format the code
-            formatted_code = black.format_file_contents(
-                code,
-                fast=True,
-                mode=black.Mode(target_versions={black.TargetVersion.PY38}),
-            )
+            # Remove unnecessary white space
+            code = autopep8.fix_code(code)
+
+            # Use list comprehension
+            formatted_code = ''.join([line.strip() for line in black.format_str(code, mode=black.Mode(target_versions={black.TargetVersion.PY38})).split('\n')])
 
             st.code(formatted_code)
 
-            # Use f-strings directly
+            # Use f-strings
             compression_ratio = (1 - len(formatted_code) / len(code)) * 100
-            st.success(f"Compression ratio: {compression_ratio:.2f}%")
+            st.success(f'Compression ratio: {compression_ratio:.2f}%')
             st.write(f"Token size: {len(formatted_code.split())}")
         except Exception as e:
             st.write(f"Error: {e}")

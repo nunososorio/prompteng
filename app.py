@@ -109,7 +109,7 @@ elif prompt_type == "Code":
             code = re.sub(r'\s+', ' ', code)
 
             # Remove line breaks
-            jumglecode = re.sub(r'\n', '', code)
+            junglecode = re.sub(r'\n', '', code)
 
             st.code(junglecode)
 

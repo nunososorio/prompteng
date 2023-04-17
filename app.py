@@ -8,6 +8,7 @@ from sumy.summarizers.lex_rank import LexRankSummarizer
 from sumy.summarizers.luhn import LuhnSummarizer
 from sumy.summarizers.kl import KLSummarizer
 import black
+import autopep8
 
 
 def summarize_text(text, language, summary_size, summarizer_type):
@@ -66,8 +67,15 @@ elif prompt_type == "Code":
     code = st.text_area("Enter Python code to compress")
     if st.button("Shogtongue the code!"):
         try:
-            formatted_code = black.format_str(code, mode=black.Mode(target_versions={black.TargetVersion.PY38}))
+            # Remove unnecessary white space
+            code = autopep8.fix_code(code)
+
+            # Use list comprehension
+            formatted_code = ''.join([line.strip() for line in black.format_str(code, mode=black.Mode(target_versions={black.TargetVersion.PY38})).split('\n')])
+
             st.code(formatted_code)
+
+            # Use f-strings
             compression_ratio = (1 - len(formatted_code) / len(code)) * 100
             st.success(f'Compression ratio: {compression_ratio:.2f}%')
             st.write(f"Token size: {len(formatted_code.split())}")

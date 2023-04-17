@@ -63,8 +63,8 @@ elif prompt_type == "Code":
     
     prompt_text = st.text_area("Formulate your prompt", value=selected_sentence)
     
-    code = st.text_area("Enter Python code")
-    if st.button("Format the code"):
+    code = st.text_area("Enter Python code to compress")
+    if st.button("Shogtongue the code!"):
         try:
             formatted_code = black.format_str(code, mode=black.Mode(target_versions={black.TargetVersion.PY38}), line_length=120)
             st.code(formatted_code)

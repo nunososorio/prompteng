@@ -68,6 +68,7 @@ elif prompt_type == "Code":
     prompt_text = st.text_area("Formulate your prompt", value=selected_sentence)
     
     code = st.text_area("Enter Python code to compress")
+    original_code_length = len(code)
     if st.button("Shogtongue the code!"):
         try:
             # Remove unnecessary white space
@@ -79,7 +80,7 @@ elif prompt_type == "Code":
             st.code(formatted_code)
 
             # Use f-strings
-            compression_ratio = (1 - len(formatted_code) / len(code)) * 100
+            compression_ratio = (1 - len(formatted_code) / len(original_code_length)) * 100
             st.success(f'Compression ratio: {compression_ratio:.2f}%')
             st.write(f"Token size: {len(formatted_code.split())}")
         except Exception as e:
@@ -114,7 +115,7 @@ elif prompt_type == "Code":
             st.code(junglecode)
 
             # Use f-strings
-            compression_ratio = (1 - len(junglecode) / len(code)) * 100
+            compression_ratio = (1 - len(junglecode) / len(original_code_length)) * 100
             st.success(f'Compression ratio: {compression_ratio:.2f}%')
             st.write(f"Token size: {len(code.split())}")
         except Exception as e:

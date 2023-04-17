@@ -67,6 +67,9 @@ elif prompt_type == "Code":
     code = st.text_area("Enter Python code to compress")
     if st.button("Shogtongue the code!"):
         try:
+            # Remove comments
+            code = re.sub(r'#.*', '', code)
+            
             # Remove unnecessary white space
             code = autopep8.fix_code(code)
 

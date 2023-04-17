@@ -10,6 +10,8 @@ from sumy.summarizers.kl import KLSummarizer
 import black
 import autopep8
 import re
+import ast
+import astunparse
 
 
 def summarize_text(text, language, summary_size, summarizer_type):

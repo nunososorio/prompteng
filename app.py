@@ -70,9 +70,6 @@ elif prompt_type == "Code":
     code = st.text_area("Enter Python code to compress")
     if st.button("Shogtongue the code!"):
         try:
-            # Remove comments
-            code = re.sub(r'#.*', '', code)
-
             # Remove unnecessary white space
             code = autopep8.fix_code(code)
 
@@ -112,12 +109,12 @@ elif prompt_type == "Code":
             code = re.sub(r'\s+', ' ', code)
 
             # Remove line breaks
-            code = re.sub(r'\n', '', code)
+            jumglecode = re.sub(r'\n', '', code)
 
-            st.code(code)
+            st.code(junglecode)
 
             # Use f-strings
-            compression_ratio = (1 - len(code) / len(code)) * 100
+            compression_ratio = (1 - len(junglecode) / len(code)) * 100
             st.success(f'Compression ratio: {compression_ratio:.2f}%')
             st.write(f"Token size: {len(code.split())}")
         except Exception as e:

@@ -83,6 +83,7 @@ elif prompt_type == "Code":
             compression_ratio = (1 - len(formatted_code) / original_code_length) * 100
             st.success(f'Compression ratio: {compression_ratio:.2f}%')
             st.write(f"Token size: {len(formatted_code.split())}")
+            st.write(f"Length: {len(formatted_code)}")
         except Exception as e:
             st.write(f"Error: {e}")
             
@@ -117,6 +118,8 @@ elif prompt_type == "Code":
             # Use f-strings
             compression_ratio = (1 - len(junglecode) / original_code_length) * 100
             st.success(f'Compression ratio: {compression_ratio:.2f}%')
-            st.write(f"Token size: {len(code.split())}")
+            st.write(f"Token size: {len(junglecode.split())}")
+            st.write(f"Length: {len(junglecode)}")
+            
         except Exception as e:
             st.write(f"Error: {e}")

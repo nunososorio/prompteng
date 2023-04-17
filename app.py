@@ -85,3 +85,38 @@ elif prompt_type == "Code":
             st.write(f"Token size: {len(formatted_code.split())}")
         except Exception as e:
             st.write(f"Error: {e}")
+            
+    def shorten_names(node):
+    if isinstance(node, ast.Name):
+        node.id = node.id[0]
+    for child in ast.iter_child_nodes(node):
+        shorten_names(child)
+
+    if st.button("Jungle mode-Shogtongue the code!"):
+        try:
+            # Parse the code into an AST
+            tree = ast.parse(code)
+
+            # Shorten variable and function names
+            shorten_names(tree)
+
+            # Unparse the modified AST back into code
+            code = astunparse.unparse(tree)
+
+            # Remove comments
+            code = re.sub(r'#.*', '', code)
+
+            # Remove unnecessary white space
+            code = re.sub(r'\s+', ' ', code)
+
+            # Remove line breaks
+            code = re.sub(r'\n', '', code)
+
+            st.code(code)
+
+            # Use f-strings
+            compression_ratio = (1 - len(code) / len(code)) * 100
+            st.success(f'Compression ratio: {compression_ratio:.2f}%')
+            st.write(f"Token size: {len(code.split())}")
+        except Exception as e:
+            st.write(f"Error: {e}")

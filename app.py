@@ -76,7 +76,7 @@ elif prompt_type == "Code":
             # Use list comprehension
             formatted_code = ''.join([line.strip() for line in black.format_str(code, mode=black.Mode(target_versions={black.TargetVersion.PY38})).split('\n')])
 
-            st.code(formatted_code)
+            st.text_area(formatted_code)
 
             # Use f-strings
             compression_ratio = (1 - len(formatted_code) / original_code_length) * 100
